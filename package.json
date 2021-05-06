@@ -1,0 +1,20 @@
+{
+  "name": "accredash",
+  "version": "1.0.0",
+  "description": "mongodb msi download:\r https://www.mongodb.com/try/download/compass",
+  "main": "app.js",
+  "dependencies": {
+    "bson": "^4.3.0",
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "mongodb": "^3.6.6",
+    "node_module": "0.0.0",
+    "uuid-token-generator": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
