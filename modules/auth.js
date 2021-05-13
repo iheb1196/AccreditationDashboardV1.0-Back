@@ -18,7 +18,7 @@ exports.auth = function(req,res){
             var mongoClient = require('mongodb').MongoClient;
             var url = "mongodb://localhost:27017/"
 
-            mongoClient.connect(url,function(err,db){
+            mongoClient.connect(url,{useUnifiedTopology: true},function(err,db){
                 if(err){throw err};
                 var dashdb = db.db('Dashboard');
 
@@ -88,7 +88,7 @@ exports.signup = function(req,res){
             var mongoClient = require('mongodb').MongoClient;
             var url = "mongodb://localhost:27017/"
 
-            mongoClient.connect(url,function(err,db){
+            mongoClient.connect(url,{useUnifiedTopology: true},function(err,db){
                 if(err){throw err};
                 var dashdb = db.db('Dashboard');
 
@@ -104,6 +104,7 @@ exports.signup = function(req,res){
                                 password:requestBody.password,
                                 email : requestBody.email,
                                 status:'PENDING',
+                                date : new Date(),
                                 
                             }
                             dashdb.collection('users').insertOne(userDoc,function(err,resl){

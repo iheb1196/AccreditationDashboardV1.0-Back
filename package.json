@@ -9,6 +9,7 @@
     "formidable": "^1.2.2",
     "mongodb": "^3.6.6",
     "node_module": "0.0.0",
+    "path": "^0.12.7",
     "uuid-token-generator": "^1.0.0"
   },
   "devDependencies": {},

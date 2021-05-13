@@ -1,14 +1,15 @@
 const { ObjectId } = require('bson');
 const urlG = require('url');
-exports.getMyCourses = function (req, res) {
+
+
+
+exports.getMyProfessors = function (req, res) {
     const contentType = req.headers['content-type'];
     const authorization = req.headers['authorization'];
   
   
     if (contentType == 'application/json') {
-        
       if (authorization != null) {
-        
   
         var mongoClient = require('mongodb').MongoClient;
         var url = "mongodb://localhost:27017/"
@@ -20,50 +21,51 @@ exports.getMyCourses = function (req, res) {
           dashdb.collection('users').findOne({ token: authorization }, function (err, result) {
             if (err) { throw err }
             if (result) {
-                console.log(result);
-                
+              console.log(result);
+              console.log(result.program);
+              console.log(result.username);
+              
+
   
-              dashdb.collection('professorcourse').find({username:result.username}).toArray(function (err, result) {
+              dashdb.collection('professorcourse').find( {program:{ $in: result.program}, username : {$ne : "salma.hamza"} } ).toArray(function (err, result) {
                 if (err) {
                   throw err;
                 }
-                console.log(result);
   
-                
-                var arrayMyCourses = [];
-                result.forEach(mycourse => {
-                  const myCrs = {
-                    coursname:mycourse.coursename,
-                    term:mycourse.term,
-                    program:mycourse.program,
-                    year:mycourse.year,
-                    username:mycourse.username,
-                    outcome:mycourse.outcome,
-                    artifact:mycourse.artifact,
-                    _id:mycourse._id
+                var arrayMyProfessors = [];
   
-                    
+                result.forEach(user => {
+                  const tmp = {
+                    username: user.username,
+                    email: user.email,
+                    role: user.role,
+                    program : user.program,
+                    outcome: user.outcome,
+                    coursename:user.coursename,
+                    year:user.year,
+                    term:user.term,
+                    id:user._id
                   }
   
-                  arrayMyCourses.push(myCrs);
-                  console.log(arrayMyCourses);
+                  arrayMyProfessors.push(tmp);
+                  console.log(arrayMyProfessors);
                 });
   
-                res.send(arrayMyCourses);
+                res.send(arrayMyProfessors);
   
               })
   
   
-            
-            
+  
+  
             } else {
               res.send({ success: false, message: "Session expired." })
             }
           })
   
-        
+        })
   
-    })
+  
       } else {
         res.send({ success: false, message: "Access denied." })
       }
@@ -73,4 +75,3 @@ exports.getMyCourses = function (req, res) {
   
   }
   
-
